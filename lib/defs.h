@@ -19,6 +19,8 @@
 //#define INSTRUMENT_SAMPLE 5
 //#define INSTRUMENT_OVAL WAVE_TRIANGLE
 
+//multiplexer
+
 #define INSTRUMENT_INVALID 0xFF
 
 #define MIN_VOICES 1
@@ -30,6 +32,9 @@
 
 #define AUDIO_SAMPLE_RATE 16000UL
 #define AUDIO_MAX_VOICES  4
+
+#define ANALOG_LOW 0
+#define ANALOG_HIGH 255
 
 typedef VFunc(void, PlayFn, DWORD stepTime);
 
@@ -48,6 +53,18 @@ typedef struct Note_t
 typedef struct Track_t
 {
     BYTE instrument;
+    BYTE wrapAround;
     WORD noteCount;
     Note_t* notes;
 }Track_t;
+
+typedef struct Voice_t
+{
+    BYTE volume;
+    Track_t track;
+}Voice_t;
+
+typedef struct Multiplexer_t
+{
+    Voice_t* voices[MAX_VOICES];
+}Multiplexer_t;

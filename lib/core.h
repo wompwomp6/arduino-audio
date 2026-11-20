@@ -1,5 +1,6 @@
 #include "commons.h"
 #include "instruments.h"
+#include "multiplexer.h"
 
 void AudioSetup(BYTE flags)
 {
