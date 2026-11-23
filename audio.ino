@@ -67,15 +67,18 @@ Note_t TriangleBass[] =
     {   0, 200 }
 };
 
-Track_t melody = { INSTRUMENT_SQUARE, ARRAY_SIZE(SquareMelody), SquareMelody };
-Track_t bass = { INSTRUMENT_SQUARE, ARRAY_SIZE(TriangleBass), TriangleBass };
+Track_t melody = { INSTRUMENT_SQUARE, FALSE, ARRAY_SIZE(SquareMelody), SquareMelody };
+Track_t bass = { INSTRUMENT_SQUARE, FALSE, ARRAY_SIZE(TriangleBass), TriangleBass };
 
 void loop() 
 {
     //AudioPlayTrack(&melody);
-    AudioPlayTrack(&bass);
+    //AudioPlayTrack(&bass);
+    Note_t note = { 1, 190 };
+    AudioPlayNote(INSTRUMENT_SAMPLE, &note);
 }
 
 void setup() 
 {
+    
 }

@@ -16,7 +16,7 @@
 //noise     -|/|-|_\/_\//|-|_\/
 #define INSTRUMENT_NOISE 4
 //sample
-//#define INSTRUMENT_SAMPLE 5
+#define INSTRUMENT_SAMPLE 5
 //#define INSTRUMENT_OVAL WAVE_TRIANGLE
 
 //multiplexer
@@ -30,13 +30,12 @@
 
 #define PIN_INVALID 0xFF
 
-#define AUDIO_SAMPLE_RATE 16000UL
 #define AUDIO_MAX_VOICES  4
 
 #define ANALOG_LOW 0
 #define ANALOG_HIGH 255
 
-typedef VFunc(void, PlayFn, DWORD stepTime);
+typedef VFunc(void, PlayFn, DWORD stepTime, DWORD time);
 
 typedef struct Instrument_t
 {

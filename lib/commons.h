@@ -9,6 +9,7 @@ extern void analogWrite(uint8_t pin, int val);
 extern void delayMicroseconds(unsigned long);
 extern void delay(unsigned long);
 extern unsigned long millis();
+extern unsigned long micros();
 #endif
 
 typedef uint8_t		BYTE;
@@ -22,7 +23,14 @@ typedef uint64_t	QWORD;
 #define ms (MS(1))
 #define us (US(1))
 
-#define VFunc(retType, name, args) retType(*name)(args);
+#ifndef FALSE
+#define FALSE 0
+#endif
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#define VFunc(retType, name, ...) retType(*name)(__VA_ARGS__);
 
 #define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
 
