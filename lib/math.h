@@ -3,7 +3,7 @@
 #define STEPS_SQUARE 2
 #define STEPS_SAWTOOTH 256
 #define STEPS_TRIANGLE 512
-#define STEPS_SAMPLE 8000
+#define STEP_CONST 1
 
 //f = 1 / t
 //t = 1 / f

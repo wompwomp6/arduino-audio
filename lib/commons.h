@@ -10,6 +10,7 @@ extern void delayMicroseconds(unsigned long);
 extern void delay(unsigned long);
 extern unsigned long millis();
 extern unsigned long micros();
+extern unsigned char pgm_read_byte();
 #endif
 
 typedef uint8_t		BYTE;

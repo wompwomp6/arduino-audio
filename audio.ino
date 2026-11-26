@@ -1,3 +1,4 @@
+#define NO_SAMPLE
 #include "lib/core.h"
 
 Note_t SquareMelody[] =
@@ -67,18 +68,53 @@ Note_t TriangleBass[] =
     {   0, 200 }
 };
 
+Note_t NoiseDrums[] =
+{
+    // Intro
+    { 100, 50 },
+    { 0, 100 },
+    { 100, 50 },
+    { 0, 100 },
+
+    // Main
+    { 100, 50 },
+    { 0, 100 },
+    { 100, 50 },
+    { 0, 100 },
+
+    { 100, 50 },
+    { 0, 100 },
+    { 100, 50 },
+    { 0, 100 },
+
+    // Ending
+    { 100, 50 },
+    { 0, 100 },
+    { 100, 50 },
+    { 0, 100 },
+};
+
 Track_t melody = { INSTRUMENT_SQUARE, FALSE, ARRAY_SIZE(SquareMelody), SquareMelody };
 Track_t bass = { INSTRUMENT_SQUARE, FALSE, ARRAY_SIZE(TriangleBass), TriangleBass };
 
+Track_t drums =
+{
+    INSTRUMENT_NOISE,
+    FALSE,
+    ARRAY_SIZE(NoiseDrums),
+    NoiseDrums
+};
+
 void loop() 
 {
-    //AudioPlayTrack(&melody);
+    AudioPlayTrack(&melody);
     //AudioPlayTrack(&bass);
-    Note_t note = { 1, 190 };
-    AudioPlayNote(INSTRUMENT_SAMPLE, &note);
+    //AudioPlayTrack(&drums);
+    Note_t note = { 1, 1000 };
+    //AudioPlayNote(INSTRUMENT_SAMPLE, &note);
 }
 
 void setup() 
 {
-    
+    AudioPlayTrack(&melody);
 }

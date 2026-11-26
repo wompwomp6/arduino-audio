@@ -41,20 +41,49 @@ void InstrumentSquare(DWORD stepTime, DWORD time)
     analogWrite(PIN_LEFT, SquareAnalog(stepTime, time));
 }
 
+
+static WORD noiseSeed = 0xACE1;
+
+BYTE NoiseAnalog()
+{
+    WORD bit = ((noiseSeed >> 0) ^
+        (noiseSeed >> 2) ^
+        (noiseSeed >> 3) ^
+        (noiseSeed >> 5)) & 1;
+
+    noiseSeed = (noiseSeed >> 1) | (bit << 15);
+
+    return (noiseSeed & 1) ? 255 : 0;
+}
+
+void InstrumentNoise(DWORD stepTime, DWORD time)
+{
+    analogWrite(PIN_LEFT, NoiseAnalog());
+}
+
+#ifdef NO_SAMPLE
+#define SAMPLE_RATE 1
+PROGMEM const unsigned char sample[] = {};
+#else
 #include "../sample.h"
+#endif
+
+
 
 BYTE SampleAnalog(DWORD stepTime, DWORD time)
 {
-    DWORD realTime = time / stepTime;
-    if (realTime >= ARRAY_SIZE(sample8000))
+    DWORD sampleRate = Time(us, SAMPLE_RATE);
+
+    DWORD realTime = time / sampleRate;
+    if (realTime >= ARRAY_SIZE(sample))
         return NULL;
 
-    return sample8000[realTime];
+    return pgm_read_byte(&sample[realTime]);
 }
 
 void InstrumentSample(DWORD stepTime, DWORD time)
 {
-    analogWrite(PIN_LEFT, SampleAnalog(stepTime, time));
+    analogWrite(PIN_LEFT, SampleAnalog(stepTime, time));//fix samples todo
 }
 
 Instrument_t InstrumentsLUT[5] =
@@ -62,6 +91,6 @@ Instrument_t InstrumentsLUT[5] =
     { STEPS_SQUARE,   &InstrumentSquare },
     { STEPS_TRIANGLE, &InstrumentTriangle },
     { STEPS_SAWTOOTH, &InstrumentSawtooth },
-    { NULL, NULL },
-    { STEPS_SAMPLE, &InstrumentSample },
+    { STEP_CONST, &InstrumentNoise },
+    { STEP_CONST, &InstrumentSample },
 };
